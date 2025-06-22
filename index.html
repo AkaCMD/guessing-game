@@ -688,6 +688,7 @@
             
             // 聚焦输入框
             answerInput.value = '';
+            answerInput.focus();
         }
         
         // 打乱数组
@@ -759,7 +760,6 @@
             } else {
                 // 错误答案
                 resultIncorrectEl.style.display = 'flex';
-                answerInput.focus();
             }
             
             updateStats();
