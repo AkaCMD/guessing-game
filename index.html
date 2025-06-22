@@ -231,9 +231,15 @@
         .correct {
             background: white;
             color: #8ac926;
-            display: flex;
+            display: none;
         }
         
+        .incorrect {
+            background: white;
+            color: #ff6b6b;
+            display: none;
+        }
+
         .answer {
             background: white;
             color: #8ac926;
@@ -431,8 +437,11 @@
                     <button class="btn" id="next-btn">下一题</button>
                 </div>
                 
-                <div class="result" id="result-correct">
+                <div class="result correct" id="result-correct">
                     <span>✅ 太棒了！回答正确！</span>
+                </div>
+                <div class="result incorrect" id="result-incorrect">
+                    <span>❌ 答案不正确，请再试一次！</span>
                 </div>
                 
                 <div class="result answer" id="result-answer">
@@ -651,6 +660,7 @@
         const totalQuestionsEl = document.getElementById('total-questions');
         const restartBtn = document.getElementById('restart-btn');
         const autocompleteToggle = document.getElementById('autocomplete-toggle');
+        const resultIncorrectEl = document.getElementById('result-incorrect');
         
         // 初始化游戏
         function initGame() {
@@ -699,6 +709,7 @@
             submitBtn.disabled = false;
             showAnswerBtn.disabled = false;
             resultCorrectEl.style.display = 'none';
+            resultIncorrectEl.style.display = 'none';
             resultAnswerEl.style.display = 'none';
             nextBtn.style.display = 'none';
             
@@ -731,11 +742,15 @@
             
             const normalizedUserAnswer = userAnswer.toLowerCase().replace(/\s+/g, '');
             
+            // 隐藏所有结果提示
+            resultCorrectEl.style.display = 'none';
+            resultAnswerEl.style.display = 'none';
+            resultIncorrectEl.style.display = 'none';
+            
             if (normalizedAnswers.includes(normalizedUserAnswer)) {
                 // 正确答案
                 score++;
                 resultCorrectEl.style.display = 'flex';
-                resultAnswerEl.style.display = 'none';
                 
                 // 更新UI
                 answerInput.disabled = true;
@@ -744,9 +759,9 @@
                 nextBtn.style.display = 'block';
             } else {
                 // 错误答案
-                alert('答案不正确，请再试一次！');
+                resultIncorrectEl.style.display = 'flex';
                 answerInput.focus();
-            }alert
+            }
             
             updateStats();
         }
